@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VM Closet — Monte seu look</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Só para visualizar a página sozinha. Pode apagar ao embutir na homepage. -->
+<style id="vmc-standalone">
+  body{margin:0;background:#fbf3ec}
+</style>
+
+<!-- ============ VM CLOSET · CSS (tudo com prefixo .vmc, não interfere no resto do site) ============ -->
+<style id="vmc-css">
+.vmc{--terra:#a8543d;--terra-d:#8a4130;--blush:#f6e4dd;--cream:#fbf3ec;--sage:#6f8a6b;--ink:#3b2a25;
+  font-family:'Jost',system-ui,sans-serif;color:var(--ink);max-width:1280px;margin:0 auto;padding:0 16px 40px}
+.vmc *{box-sizing:border-box}
+.vmc button{font:inherit;color:inherit}
+
+.vmc-head{text-align:center;padding:40px 0 22px}
+.vmc-eyebrow{letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--terra);margin:0}
+.vmc-title{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,4vw,46px);margin:8px 0 6px;line-height:1.1}
+.vmc-sub{margin:0;opacity:.72;font-weight:300}
+
+/* ---------- palco / cenário ---------- */
+.vmc-stage{position:relative;aspect-ratio:16/9;min-height:560px;overflow:hidden;border-radius:6px;background:var(--blush);isolation:isolate}
+.vmc-wall{position:absolute;inset:0 0 21% 0;
+  background:
+   radial-gradient(circle at 25% 30%,rgba(168,84,61,.18) 0 3px,transparent 4px),
+   radial-gradient(circle at 75% 70%,rgba(168,84,61,.14) 0 2.5px,transparent 3.5px),
+   radial-gradient(circle at 50% 50%,rgba(111,138,107,.16) 0 1.8px,transparent 2.8px),
+   linear-gradient(#f8e9e1,#f3dcd2);
+  background-size:54px 54px,54px 54px,27px 27px,100% 100%}
+.vmc-wains{position:absolute;left:0;right:0;bottom:21%;height:21%;background:
+   repeating-linear-gradient(90deg,transparent 0 118px,rgba(120,90,60,.16) 118px 120px),#f5ede2;
+  border-top:4px solid #e7d9c6;box-shadow:0 -1px 0 rgba(255,255,255,.7)}
+.vmc-floor{position:absolute;left:0;right:0;bottom:0;height:21%;background:
+   repeating-linear-gradient(90deg,rgba(60,30,10,.12) 0 2px,transparent 2px 110px),
+   linear-gradient(#bc8c5c,#a6764a)}
+.vmc-window{position:absolute;left:17%;width:30%;top:5%;height:55%;border:7px solid #f6eee2;
+  background:linear-gradient(#d9e8ee,#f4eee0);box-shadow:inset 0 0 22px rgba(255,255,255,.6),0 6px 18px rgba(80,40,20,.16)}
+.vmc-window::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:5px;margin-left:-2.5px;background:#f6eee2}
+.vmc-cur{position:absolute;top:-4%;bottom:-8%;width:34%;
+  background:repeating-linear-gradient(90deg,#d98b7a 0 9px,#cd7d6c 9px 18px,#e19b8d 18px 27px);
+  box-shadow:0 6px 14px rgba(80,30,20,.22);border-radius:0 0 40% 40%/0 0 7% 7%}
+.vmc-cur.l{left:-13%}.vmc-cur.r{right:-13%}
+.vmc-cur::after{content:"";position:absolute;left:0;right:0;top:55%;height:7px;background:var(--terra-d);opacity:.55}
+.vmc-bfly{position:absolute;width:34px;height:28px;opacity:.55;animation:vmcFloat 7s ease-in-out infinite;pointer-events:none;z-index:1}
+.vmc-bfly.a{left:8%;top:18%}.vmc-bfly.b{left:52%;top:10%;animation-delay:-2.5s;transform:scale(.8)}
+.vmc-bfly.c{left:11%;top:40%;animation-delay:-4.5s;transform:scale(.65)}
+@keyframes vmcFloat{0%,100%{translate:0 0;rotate:-6deg}50%{translate:10px -12px;rotate:8deg}}
+
+/* ---------- modelo ---------- */
+.vmc-modelwrap{position:absolute;left:6%;width:52%;top:2%;bottom:9%;display:flex;justify-content:center;z-index:2}
+.vmc-model{height:100%;width:auto;overflow:visible}
+.vmc-model .vmc-garment{filter:drop-shadow(0 0 .7px rgba(50,25,15,.55)) drop-shadow(0 2px 2px rgba(50,25,15,.12))}
+.vmc-layer.in{animation:vmcIn .5s cubic-bezier(.2,.8,.3,1) both}
+@keyframes vmcIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+
+/* ---------- guarda-roupa ---------- */
+.vmc-side{position:absolute;right:3.5%;top:7%;bottom:15%;width:37%;display:flex;z-index:3}
+.vmc-tabs{display:flex;flex-direction:column;justify-content:center;gap:10px;margin-right:-6px;position:relative;z-index:2}
+.vmc .vmc-tab{flex:0 1 150px;min-height:92px;width:44px;border:0;cursor:pointer;background:var(--sage);color:#fbf3ec;
+  writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Playfair Display',serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  border-radius:0 10px 10px 0;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22),2px 3px 8px rgba(40,30,20,.2);transition:translate .25s,background .25s}
+.vmc-tab:hover{translate:4px 0}
+.vmc-tab[aria-selected="true"]{background:var(--terra);translate:8px 0}
+.vmc-tab:focus-visible,.vmc-item:focus-visible,.vmc-btn:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+
+.vmc-wardrobe{position:relative;flex:1;perspective:1400px;border-radius:10px 10px 4px 4px;
+  background:linear-gradient(#d9b88f,#c9a174);padding:12px 12px 16px;box-shadow:0 14px 30px rgba(70,40,20,.28),inset 0 0 0 2px rgba(255,255,255,.25)}
+.vmc-wardrobe::before{content:"";position:absolute;left:6px;right:6px;top:-9px;height:12px;border-radius:8px 8px 0 0;background:#c9a174;box-shadow:inset 0 2px 0 rgba(255,255,255,.35)}
+.vmc-interior{position:absolute;inset:12px 12px 16px;background:linear-gradient(#fbf3ec,#f3e7dc);border-radius:4px;overflow:hidden auto;padding:12px;
+  box-shadow:inset 0 0 14px rgba(90,50,30,.18)}
+.vmc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.vmc-grid.swap{animation:vmcFade .35s ease both}
+@keyframes vmcFade{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+.vmc-item{background:transparent;border:1.5px solid transparent;border-radius:8px;padding:4px 4px 6px;cursor:pointer;text-align:center;transition:background .2s,border-color .2s,transform .2s}
+.vmc-item:hover{transform:translateY(-2px);background:rgba(168,84,61,.06)}
+.vmc-item[aria-pressed="true"]{border-color:var(--terra);background:rgba(168,84,61,.09)}
+.vmc-item svg{display:block;width:100%;aspect-ratio:3/4}
+.vmc-item span{display:block;font-size:11px;line-height:1.2;margin-top:2px;opacity:.8}
+.vmc-door{position:absolute;top:0;bottom:0;width:50%;z-index:2;background:linear-gradient(#dcbb92,#c9a174);transition:transform .9s cubic-bezier(.6,.05,.25,1);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.28)}
+.vmc-door::before{content:"";position:absolute;inset:12px;border:2px solid rgba(110,70,40,.35);border-radius:4px;box-shadow:inset 0 0 0 4px rgba(255,255,255,.12)}
+.vmc-door::after{content:"";position:absolute;top:50%;width:8px;height:34px;border-radius:5px;background:#8a6a3f;margin-top:-17px}
+.vmc-door.l{left:0;transform-origin:left center;border-radius:10px 0 0 4px}.vmc-door.l::after{right:10px}
+.vmc-door.r{right:0;transform-origin:right center;border-radius:0 10px 4px 0}.vmc-door.r::after{left:10px}
+.vmc-wardrobe.open .vmc-door{transform:scaleX(.04)}
+
+/* ---------- barra / ações ---------- */
+.vmc-bar{position:absolute;left:6%;width:52%;bottom:2.2%;display:flex;justify-content:center;align-items:center;gap:10px;z-index:4}
+.vmc .vmc-btn{cursor:pointer;border:1.5px solid var(--terra);background:rgba(251,243,236,.85);color:var(--terra);padding:11px 22px;border-radius:2px;
+  letter-spacing:.22em;text-transform:uppercase;font-size:12px;font-weight:500;transition:background .2s,color .2s,opacity .2s}
+.vmc-btn:hover:not(:disabled){background:var(--terra);color:#fff}
+.vmc-btn:disabled{opacity:.5;cursor:default}
+.vmc .vmc-btn.ghost{border-color:transparent;background:transparent;padding:11px 10px;letter-spacing:.14em;font-size:11px;color:var(--ink)}
+.vmc-btn.ghost:hover:not(:disabled){background:transparent;color:var(--terra);text-decoration:underline}
+.vmc-count{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--terra);color:#fff;font-size:10px;margin-left:8px;letter-spacing:0}
+.vmc-btn:hover .vmc-count{background:#fff;color:var(--terra)}
+
+/* ---------- gaveta "Seu look" ---------- */
+.vmc-drawer{position:absolute;left:0;right:0;bottom:0;z-index:6;background:var(--cream);padding:22px 26px 24px;max-height:70%;overflow:auto;
+  transform:translateY(102%);transition:transform .45s cubic-bezier(.2,.8,.3,1);box-shadow:0 -12px 30px rgba(70,40,20,.22)}
+.vmc-drawer.open{transform:none}
+.vmc-drawer h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 12px}
+.vmc-close{position:absolute;right:16px;top:12px;background:none;border:0;font-size:26px;cursor:pointer;line-height:1}
+.vmc-list{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px 24px}
+.vmc-list li{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid rgba(168,84,61,.2);padding:8px 0;font-size:14px}
+.vmc-list a{color:var(--terra);text-decoration:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.vmc-list a:hover{text-decoration:underline}
+.vmc-actions{display:flex;gap:10px;flex-wrap:wrap}
+.vmc .vmc-actions .vmc-btn.solid{background:var(--terra);color:#fff}
+.vmc-actions .vmc-btn.solid:hover{background:var(--terra-d)}
+
+/* ---------- abertura (portas + carregando) ---------- */
+.vmc-intro{position:absolute;inset:0;z-index:10;transition:visibility 0s 1.3s}
+.vmc-intro.done{visibility:hidden;pointer-events:none}
+.vmc-panel{position:absolute;top:0;bottom:0;width:50%;transition:transform 1.2s cubic-bezier(.7,.05,.2,1);
+  background:
+   repeating-linear-gradient(90deg,rgba(90,55,30,.07) 0 1px,transparent 1px 7px),
+   linear-gradient(#e4c9a3,#d4b087)}
+.vmc-panel.l{left:0;border-right:2px solid rgba(90,55,30,.3)}
+.vmc-panel.r{right:0}
+.vmc-panel::before{content:"";position:absolute;inset:7% 8%;border:3px solid rgba(110,70,40,.35);border-radius:6px;box-shadow:inset 0 0 0 7px rgba(255,255,255,.1)}
+.vmc-intro.done .vmc-panel.l{transform:translateX(-101%)}
+.vmc-intro.done .vmc-panel.r{transform:translateX(101%)}
+.vmc-sign{position:absolute;left:50%;top:50%;translate:-50% -50%;width:min(360px,70%);padding:22px 26px 20px;border-radius:14px;
+  background:var(--terra);color:#fbf3ec;text-align:center;transform:rotate(-3deg);box-shadow:0 10px 26px rgba(60,30,20,.35),inset 0 0 0 3px rgba(255,255,255,.18);transition:opacity .4s}
+.vmc-intro.done .vmc-sign{opacity:0}
+.vmc-sign b{display:block;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,3vw,30px);letter-spacing:.06em;text-transform:uppercase}
+.vmc-prog{margin-top:14px;height:14px;border-radius:8px;background:#fbf3ec;overflow:hidden;padding:2px}
+.vmc-prog i{display:block;height:100%;width:0;border-radius:6px;background:repeating-linear-gradient(-45deg,var(--sage) 0 8px,#8ba488 8px 16px)}
+
+/* ---------- celular ---------- */
+@media (max-width:860px){
+  .vmc{padding:0 10px 30px}
+  .vmc-stage{aspect-ratio:auto;min-height:0;display:flex;flex-direction:column;--mh:min(64vh,500px)}
+  .vmc-wall{inset:0}
+  .vmc-wains{display:none}
+  .vmc-floor{top:calc(var(--mh) - 46px);height:auto}
+  .vmc-window{left:50%;translate:-50% 0;width:66%;top:3%;height:calc(var(--mh) * .62)}
+  .vmc-modelwrap{position:relative;left:auto;width:100%;top:auto;bottom:auto;height:var(--mh);padding:8px 0 4px}
+  .vmc-side{position:relative;right:auto;top:auto;bottom:auto;width:auto;margin:0 10px;flex-direction:column}
+  .vmc-tabs{flex-direction:row;margin:0 0 -2px;gap:6px;overflow-x:auto;justify-content:flex-start;padding-top:6px}
+  .vmc .vmc-tab{writing-mode:horizontal-tb;transform:none;width:auto;min-height:0;flex:0 0 auto;padding:10px 14px;border-radius:10px 10px 0 0;font-size:11px}
+  .vmc-tab:hover,.vmc-tab[aria-selected="true"]{translate:0 -3px}
+  .vmc-wardrobe{padding:10px;border-radius:0 0 10px 10px}
+  .vmc-wardrobe::before,.vmc-door{display:none}
+  .vmc-interior{position:relative;inset:auto;max-height:290px;padding:8px}
+  .vmc-grid{grid-template-columns:repeat(4,1fr)}
+  .vmc-bar{position:relative;left:auto;width:auto;bottom:auto;margin:14px 10px 16px;flex-wrap:wrap}
+  .vmc-drawer{padding:20px 18px 22px;max-height:82%}
+}
+@media (max-width:430px){.vmc-grid{grid-template-columns:repeat(3,1fr)}}
+@media (prefers-reduced-motion:reduce){.vmc *,.vmc *::before,.vmc *::after{animation:none!important;transition:none!important}}
+
+/* ===== v2: provador, cortina, borboletas, cenário ilustrado ===== */
+.vmc .vmc-window{border:8px solid #c9a174;border-radius:220px 220px 8px 8px;background:linear-gradient(120deg,#e6eff1,#faf4ea 45%,#dce8eb);
+  box-shadow:inset 0 0 26px rgba(255,255,255,.7),0 8px 20px rgba(80,40,20,.2);top:6%;height:60%}
+.vmc .vmc-window::after{display:none}
+.vmc-stool{position:absolute;left:5%;bottom:11%;width:9%;height:11%;z-index:1;background:
+  radial-gradient(ellipse at 50% 12%,#e7b7a8 0 58%,transparent 59%),
+  linear-gradient(90deg,transparent 14%,#b88a5a 14% 22%,transparent 22% 78%,#b88a5a 78% 86%,transparent 86%) 0 40%/100% 70% no-repeat}
+.vmc .vmc-door{display:none}
+.vmc .vmc-wardrobe::before{display:none}
+.vmc .vmc-wardrobe{padding:10px;background:linear-gradient(#e0c29c,#cfa97c)}
+.vmc .vmc-interior{inset:10px}
+
+.vmc .vmc-intro{transition:none}
+.vmc .vmc-intro.done{visibility:visible;pointer-events:none}
+.vmc-curt{position:absolute;top:0;bottom:0;width:50%;transition:transform 1.6s cubic-bezier(.6,.05,.25,1);
+  background:repeating-linear-gradient(90deg,#d98b7a 0 16px,#c8766a 16px 30px,#e39f90 30px 46px);box-shadow:0 0 30px rgba(80,30,20,.35)}
+.vmc-curt::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.1),transparent 30%,rgba(60,20,10,.18))}
+.vmc-curt.l{left:0;transform-origin:left center}.vmc-curt.r{right:0;transform-origin:right center}
+.vmc-intro.done .vmc-curt{transform:scaleX(.17)}
+.vmc-rod{position:absolute;left:0;right:0;top:0;height:12px;background:linear-gradient(#8a6a3f,#6b4f2c);box-shadow:0 3px 6px rgba(0,0,0,.25)}
+
+.vmc-fly{position:absolute;left:0;top:0;z-index:5;pointer-events:none;will-change:transform}
+.vmc-fly svg,.vmc-fly img{display:block;width:100%;height:auto;opacity:.78}
+.vmc-fly .wings{transform-box:fill-box;transform-origin:50% 55%;animation:vmcFlap .28s ease-in-out infinite alternate}
+.vmc-fly img{transform-origin:50% 55%;animation:vmcFlap .28s ease-in-out infinite alternate}
+@keyframes vmcFlap{to{transform:scaleX(.28)}}
+
+.vmc-stage.vmc-hasscene{background:var(--scene) center/cover no-repeat}
+.vmc-hasscene .vmc-wall,.vmc-hasscene .vmc-wains,.vmc-hasscene .vmc-floor,.vmc-hasscene .vmc-window,.vmc-hasscene .vmc-stool{display:none}
+@media (max-width:860px){
+  .vmc .vmc-window{left:50%;translate:-50% 0;width:62%;top:3%;height:calc(var(--mh) * .66)}
+  .vmc-stool{display:none}
+  .vmc-stage.vmc-hasscene{background-image:var(--scene-m,var(--scene))}
+}
+
+.vmc .vmc-modelwrap{left:9%;width:50%}.vmc .vmc-bar{left:9%;width:50%}
+.vmc .vmc-window{left:19%}.vmc .vmc-stool{left:9.5%}
+.vmc .vmc-side{right:9%;width:35%}
+.vmc-intro.done .vmc-curt{transform:scaleX(.13)}
+@media (max-width:860px){
+  .vmc .vmc-modelwrap,.vmc .vmc-bar{left:auto;width:100%}.vmc .vmc-bar{width:auto}
+  .vmc .vmc-window{left:50%}
+  .vmc .vmc-side{right:auto;width:auto;margin:0 34px}
+  .vmc-intro.done .vmc-curt{transform:scaleX(.1)}
+}
+.vmc .vmc-drawer{visibility:hidden;transition:transform .45s cubic-bezier(.2,.8,.3,1),visibility 0s .45s}
+.vmc .vmc-drawer.open{visibility:visible;transition-delay:0s}
+</style>
+</head>
+<body>
+
+<!-- ============ VM CLOSET · HTML ============ -->
+<section class="vmc" id="vm-closet" aria-label="Monte seu look">
+  <header class="vmc-head">
+    <p class="vmc-eyebrow">Nova coleção</p>
+    <h2 class="vmc-title">Monte seu look</h2>
+    <p class="vmc-sub">Abra o closet, escolha as peças e veja como ficam.</p>
+  </header>
+
+  <div class="vmc-stage" id="vmc-stage">
+    <div class="vmc-wall"></div><div class="vmc-wains"></div><div class="vmc-floor"></div>
+    <div class="vmc-window"></div><div class="vmc-stool"></div>
+
+
+    <div class="vmc-modelwrap"><svg class="vmc-model" id="vmc-model" viewBox="0 0 400 880" role="img" aria-label="Modelo com o look escolhido"></svg></div>
+
+    <div class="vmc-side">
+      <div class="vmc-tabs" id="vmc-tabs" role="tablist" aria-label="Categorias"></div>
+      <div class="vmc-wardrobe" id="vmc-wardrobe">
+        <div class="vmc-interior"><div class="vmc-grid" id="vmc-grid" role="tabpanel"></div></div>
+        <div class="vmc-door l"></div><div class="vmc-door r"></div>
+      </div>
+    </div>
+
+    <div class="vmc-bar">
+      <button class="vmc-btn ghost" id="vmc-random" type="button">Surpreenda-me</button>
+      <button class="vmc-btn" id="vmc-shop" type="button" disabled>Shop now<span class="vmc-count" id="vmc-count">0</span></button>
+      <button class="vmc-btn ghost" id="vmc-clear" type="button">Limpar</button>
+    </div>
+
+    <aside class="vmc-drawer" id="vmc-drawer" aria-label="Seu look" aria-hidden="true">
+      <button class="vmc-close" id="vmc-close" type="button" aria-label="Fechar">&times;</button>
+      <h3>Seu look</h3>
+      <ul class="vmc-list" id="vmc-list"></ul>
+      <div class="vmc-actions" id="vmc-actions"></div>
+    </aside>
+
+    <div class="vmc-intro" id="vmc-intro" aria-live="polite">
+      <div class="vmc-curt l"></div><div class="vmc-curt r"></div><div class="vmc-rod"></div>
+      <div class="vmc-sign"><b>Monte seu look</b><div class="vmc-prog"><i id="vmc-bar"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- defs compartilhados (estampas das peças ilustradas) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="vmc-bf" fill="#a8543d"><path d="M20 16C14 4 3 2 3 11c0 6 8 8 17 5z"/><path d="M20 16C26 4 37 2 37 11c0 6-8 8-17 5z"/><path d="M20 17c-8 1-12 6-9 11 3 3 8-1 9-11z" opacity=".8"/><path d="M20 17c8 1 12 6 9 11-3 3-8-1-9-11z" opacity=".8"/></g>
+  <pattern id="vmc-stripe" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#f5ebdd"/><rect width="10" height="3.4" fill="#a8543d"/></pattern>
+  <pattern id="vmc-floral" width="26" height="26" patternUnits="userSpaceOnUse"><rect width="26" height="26" fill="#5d7650"/><ellipse cx="6" cy="7" rx="4" ry="2" transform="rotate(35 6 7)" fill="#8fa77a"/><circle cx="18" cy="16" r="2.2" fill="#e8d9a8"/><ellipse cx="20" cy="4" rx="3.5" ry="1.6" transform="rotate(-30 20 4)" fill="#7a9467"/><circle cx="7" cy="20" r="1.6" fill="#e8d9a8"/></pattern>
+  <pattern id="vmc-dots" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#8fb0d6"/><circle cx="4" cy="4" r="1.6" fill="#f4f8fc"/><circle cx="11" cy="11" r="1.6" fill="#f4f8fc"/></pattern>
+  <pattern id="vmc-denim" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#7b9bbd"/><rect width="4" height="1" fill="#6f8fb2"/></pattern>
+</defs></svg>
+
+<script>
+/* Peças e modelo da coleção (gerado a partir das ilustrações) */
+window.VM_CLOSET={"canvas": [352, 1046], "model": "assets/modelo.webp", "pieces": [{"id": "t2", "cat": "top", "name": "Body Havana Preto", "layer": "assets/t2.webp", "thumb": "assets/th_t2.webp", "rect": [98, 170, 163, 334]}, {"id": "t3", "cat": "top", "name": "Body Havana Branco", "layer": "assets/t3.webp", "thumb": "assets/th_t3.webp", "rect": [98, 174, 162, 324]}, {"id": "t4", "cat": "top", "name": "Casaqueto Positano", "layer": "assets/t4.webp", "thumb": "assets/th_t4.webp", "rect": [33, 157, 289, 343]}, {"id": "t5", "cat": "top", "name": "Corset Positano", "layer": "assets/t5.webp", "thumb": "assets/th_t5.webp", "rect": [104, 239, 153, 178]}, {"id": "t6", "cat": "top", "name": "Blazer Lis", "layer": "assets/t6.webp", "thumb": "assets/th_t6.webp", "rect": [38, 157, 277, 342]}, {"id": "t7", "cat": "top", "name": "Corset Lis", "layer": "assets/t7.webp", "thumb": "assets/th_t7.webp", "rect": [86, 194, 200, 318]}, {"id": "t8", "cat": "top", "name": "Blusa Brezza", "layer": "assets/t8.webp", "thumb": "assets/th_t8.webp", "rect": [76, 226, 199, 205]}, {"id": "t9", "cat": "top", "name": "Body Havana Marrom", "layer": "assets/t9.webp", "thumb": "assets/th_t9.webp", "rect": [94, 220, 168, 283]}, {"id": "b1", "cat": "bottom", "name": "Calça Brezza", "layer": "assets/b1.webp", "thumb": "assets/th_b1.webp", "rect": [38, 375, 280, 650]}, {"id": "b3", "cat": "bottom", "name": "Shorts Saia Positano", "layer": "assets/b3.webp", "thumb": "assets/th_b3.webp", "rect": [57, 389, 246, 164]}, {"id": "b4", "cat": "bottom", "name": "Shorts Lis", "layer": "assets/b4.webp", "thumb": "assets/th_b4.webp", "rect": [79, 368, 207, 177]}, {"id": "d1", "cat": "dress", "name": "Conjunto Perla Marinho", "layer": "assets/d1.webp", "thumb": "assets/th_d1.webp", "rect": [14, 157, 329, 882]}, {"id": "d2", "cat": "dress", "name": "Vestido Positano", "layer": "assets/d2.webp", "thumb": "assets/th_d2.webp", "rect": [6, 157, 339, 499]}, {"id": "d3", "cat": "dress", "name": "Vestido Bellarosa Preto", "layer": "assets/d3.webp", "thumb": "assets/th_d3.webp", "rect": [32, 157, 292, 882]}, {"id": "d4", "cat": "dress", "name": "Vestido Bellarosa Marfim", "layer": "assets/d4.webp", "thumb": "assets/th_d4.webp", "rect": [19, 157, 317, 882]}, {"id": "d5", "cat": "dress", "name": "Conjunto Perla Verde", "layer": "assets/d5.webp", "thumb": "assets/th_d5.webp", "rect": [27, 157, 298, 882]}, {"id": "d6", "cat": "dress", "name": "Macaquinho Sapphir Marfim", "layer": "assets/d6.webp", "thumb": "assets/th_d6.webp", "rect": [76, 175, 207, 375]}, {"id": "d7", "cat": "dress", "name": "Macaquinho Sapphir Cereja", "layer": "assets/d7.webp", "thumb": "assets/th_d7.webp", "rect": [75, 170, 214, 369]}], "looks": ["b1", "b3", "b4", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "t2", "t2+b1", "t2+b3", "t2+b4", "t3", "t3+b1", "t3+b3", "t3+b4", "t4", "t4+b1", "t4+b3", "t4+b4", "t5", "t5+b1", "t5+b3", "t5+b4", "t6", "t6+b1", "t6+b3", "t6+b4", "t7", "t7+b1", "t7+b3", "t7+b4", "t8", "t8+b1", "t8+b3", "t8+b4", "t9", "t9+b1", "t9+b3", "t9+b4"], "looksDir": "looks/"};
+</script>
+<!-- ============ VM CLOSET · JS ============ -->
+<script>
+/* ILUSTRAÇÕES (todas opcionais; sem elas aparece o desenho provisório):
+   scene        : cenário do provador em PNG/JPG/WebP 16:9 (ex. 2400x1350), SEM a modelo e SEM as peças
+   sceneMobile  : versão vertical do cenário para celular (ex. 1170x1800)
+   model        : modelo em PNG transparente 400x880 proporção (ex. 1200x2640), pose frontal, de roupa de baixo
+   butterfly    : borboleta em PNG transparente, asas abertas, de frente (ex. 200x160)
+   pieces[].layer: cada peça já VESTIDA, PNG transparente com o MESMO tamanho/enquadramento da modelo (alinhada em cima dela)
+   (a miniatura do guarda-roupa é recortada automaticamente da layer; use pieces[].thumb só se quiser outra imagem) */
+/* Configuração opcional: defina window.VM_CLOSET ANTES deste script.
+   window.VM_CLOSET = { shopUrl:'https://...', whatsapp:'55199...', pieces:[ ...suas peças... ] }
+   Cada peça: { id, cat:'top|bottom|dress|shoes', name, price, url, layer:'camada-vestida.png', thumb:'miniatura.png' }
+   Com `layer` (PNG transparente 400x880 alinhado à modelo) a ilustração provisória é substituída pela imagem real. */
+(function(){
+  var root=document.getElementById('vm-closet'); if(!root) return;
+  var CFG=Object.assign({shopUrl:'https://www.vmfashionstore.com.br',whatsapp:''},window.VM_CLOSET||{});
+  var $=function(id){return document.getElementById(id)};
+  var CV=CFG.canvas||[400,880];
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- helpers de desenho (metade esquerda espelhada em x=200) ---------- */
+  var M='transform="translate(400 0) scale(-1 1)"';
+  function H(d,f,x){x=x||'';return '<path d="'+d+'" fill="'+f+'" '+x+'/><path d="'+d+'" '+M+' fill="'+f+'" '+x+'/>'}
+  function L(d,s,w){return '<g fill="none" stroke="'+(s||'rgba(40,20,10,.3)')+'" stroke-width="'+(w||1)+'" stroke-linecap="round"><path d="'+d+'"/><path d="'+d+'" '+M+'/></g>'}
+  function P(d,f){return '<path d="'+d+'" fill="'+f+'"/>'}
+
+  /* ---------- peças provisórias (ilustradas) ---------- */
+  var CATS=[{id:'top',label:'Partes de cima'},{id:'bottom',label:'Partes de baixo'},{id:'dress',label:'Peças únicas'},{id:'shoes',label:'Sapatos'}];
+  var DEFAULT_PIECES=[
+    {id:'t1',cat:'top',name:'Blusa listrada',vb:'90 130 220 250',draw:function(){return H('M200 170 L178 141 L170 139 C150 148 138 164 139 186 C124 196 110 240 104 290 L100 342 L122 344 C128 300 136 262 148 242 C157 280 160 322 157 362 L200 368 Z','url(#vmc-stripe)')+L('M101 330 L123 332')}},
+    {id:'t2',cat:'top',name:'Cropped de linho',vb:'90 130 220 190',draw:function(){return H('M200 152 Q186 154 177 141 L170 139 C150 148 138 164 139 186 C132 200 124 222 120 244 L142 252 C146 246 148 244 150 240 C153 262 154 284 152 296 L200 300 Z','#f1e2cc')+L('M152 290 L200 294')}},
+    {id:'t3',cat:'top',name:'Regata terracota',vb:'90 130 220 240',draw:function(){return H('M200 184 Q188 182 184 142 L175 142 C172 176 152 190 153 216 C155 262 159 322 157 346 L200 350 Z','#b9654c')+L('M158 340 L200 344')}},
+    {id:'t4',cat:'top',name:'Camisa verde',vb:'90 130 220 260',draw:function(){return H('M200 160 L184 141 L170 139 C148 148 136 164 137 186 C128 200 120 226 114 252 L142 262 C150 258 152 252 152 246 C157 290 160 330 158 374 L200 380 Z','#8ea583')+'<path d="M200 160 L200 380" stroke="rgba(40,60,30,.35)" fill="none"/>'+[200,240,280,320,356].map(function(y){return '<circle cx="200" cy="'+y+'" r="2" fill="#f4ecd8"/>'}).join('')}},
+
+    {id:'b1',cat:'bottom',name:'Calça pantalona jeans',vb:'90 330 220 495',draw:function(){return H('M200 340 L157 338 C150 394 133 440 131 472 C128 600 118 720 106 814 L180 814 C184 700 194 580 200 500 Z','url(#vmc-denim)')+L('M165 346 L150 470 C148 560 138 700 128 810')}},
+    {id:'b2',cat:'bottom',name:'Saia midi evasê',vb:'80 330 240 460',draw:function(){return H('M200 340 L157 338 C150 392 134 440 126 490 C112 570 102 650 96 770 C130 778 170 778 200 780 Z','#f1e2cc')+L('M128 520 Q165 534 200 536')+L('M110 630 Q160 646 200 649')}},
+    {id:'b3',cat:'bottom',name:'Short verde',vb:'100 330 200 250',draw:function(){return H('M200 340 L157 338 C150 392 134 440 130 480 L122 566 L188 574 L200 520 Z','#7d9871')}},
+    {id:'b4',cat:'bottom',name:'Calça alfaiataria',vb:'100 330 200 495',draw:function(){return H('M200 340 L157 338 C150 394 133 440 131 472 C132 600 134 720 138 812 L184 814 C190 700 196 580 200 500 Z','#b9654c')+L('M170 346 L168 480')}},
+
+    {id:'d1',cat:'dress',name:'Vestido halter floral',vb:'70 130 260 640',draw:function(){return H('M200 192 Q192 186 190 140 L181 140 C176 172 158 192 156 220 C158 270 160 318 157 342 C150 396 132 440 124 500 C112 600 98 690 90 748 C130 758 170 758 200 760 Z','url(#vmc-floral)')+L('M157 342 Q180 352 200 352','rgba(30,40,20,.4)',1.5)}},
+    {id:'d2',cat:'dress',name:'Vestido azul de alças',vb:'70 130 260 600',draw:function(){return H('M200 176 Q188 172 184 142 L176 142 C172 172 154 188 152 214 C154 262 158 300 157 332 C146 380 128 430 118 500 C108 580 98 640 92 700 C130 712 170 712 200 714 Z','url(#vmc-dots)')+L('M98 650 Q150 668 200 668','rgba(255,255,255,.7)',1.5)+L('M157 332 L200 336')}},
+    {id:'d3',cat:'dress',name:'Vestido amarelo longo',vb:'60 130 280 680',draw:function(){return H('M200 170 Q190 166 186 142 L178 142 C176 170 158 184 156 206 C158 232 160 250 158 262 C150 330 136 420 120 520 C108 620 96 710 86 790 C130 800 170 800 200 802 Z','#efd98a')+L('M158 262 Q180 272 200 272','rgba(120,90,20,.4)',1.5)+L('M120 520 Q160 530 200 532','rgba(120,90,20,.2)')}},
+
+    {id:'s1',cat:'shoes',name:'Sandália terracota',vb:'130 790 140 62',draw:function(){return H('M154 828 C166 838 184 836 194 828 L194 842 C180 846 160 846 150 840 Z','#a8543d')+H('M158 812 L190 820 L190 827 L158 819 Z','#b9654c')+H('M160 800 L190 800 L190 806 L160 806 Z','#b9654c')}},
+    {id:'s2',cat:'shoes',name:'Tênis branco',vb:'130 790 140 62',draw:function(){return H('M154 806 L192 804 L194 830 C180 836 160 836 150 832 Z','#fffaf4')+H('M148 832 C160 838 182 838 196 830 L196 840 C180 846 160 846 148 840 Z','#e6dccf')+L('M162 812 L184 810 M162 818 L186 816','rgba(60,40,30,.35)')}},
+    {id:'s3',cat:'shoes',name:'Rasteira dourada',vb:'130 790 140 62',draw:function(){return H('M154 834 C166 840 184 838 194 832 L194 838 C182 844 162 844 152 840 Z','#c9a35a')+H('M158 818 L190 826 L190 830 L158 822 Z','#c9a35a')}}
+  ];
+  var PIECES=CFG.pieces||DEFAULT_PIECES;
+  CATS=CATS.filter(function(c){return PIECES.some(function(p){return p.cat===c.id})});
+
+  /* ---------- modelo base ---------- */
+  var SKIN='#e8bb9f',HAIR='#5a3524';
+  var torso='M200 138 L170 138 C150 150 138 168 140 200 C143 250 160 290 157 335 C150 380 130 420 131 465 C133 560 152 680 162 800 L190 800 C192 700 196 600 200 500 Z';
+  var arm='M143 158 C122 170 112 220 108 290 C104 350 100 420 104 472 L121 474 C127 420 131 350 137 290 C141 240 150 200 153 168 Z';
+  var foot='M160 796 L192 796 L193 828 C182 840 162 840 152 834 Z';
+  var modelSVG=
+    '<ellipse cx="200" cy="846" rx="100" ry="9" fill="rgba(60,30,15,.22)"/>'+
+    '<path d="M166 82 C160 24 240 24 234 82 C244 124 238 196 228 226 L172 226 C162 196 156 124 166 82Z" fill="'+HAIR+'"/>'+
+    '<rect x="188" y="112" width="24" height="40" fill="'+SKIN+'"/>'+
+    '<ellipse cx="200" cy="88" rx="29" ry="37" fill="'+SKIN+'"/>'+
+    H(torso,SKIN)+H(arm,SKIN)+H(foot,SKIN)+
+    L('M153 168 C150 200 141 240 137 290','rgba(120,60,40,.28)')+
+    '<path d="M194 106 Q200 110 206 106 Q200 103 194 106Z" fill="#c0605a"/>'+
+    H('M200 196 L168 192 C160 204 158 220 166 230 C178 236 192 232 200 226 Z','#f8f0ea')+
+    H('M200 440 L134 440 C132 456 140 480 160 492 C176 500 190 504 200 504 Z','#f8f0ea')+
+    '<g id="vmc-L-bottom" class="vmc-layer vmc-garment"></g>'+
+    '<g id="vmc-L-top" class="vmc-layer vmc-garment"></g>'+
+    '<g id="vmc-L-dress" class="vmc-layer vmc-garment"></g>'+
+    '<g id="vmc-L-look" class="vmc-layer"></g>'+
+    '<g id="vmc-L-shoes" class="vmc-layer vmc-garment"></g>'+
+    '<path d="M170 86 C168 40 232 40 230 86 C222 62 205 52 192 56 C182 60 174 70 170 86Z" fill="'+HAIR+'"/>'+
+    H('M172 100 C166 150 164 200 170 238 L180 236 C176 196 178 150 184 112 Z',HAIR);
+  if(CFG.model){ /* modelo ilustrada pela VM substitui a provisória */
+    modelSVG=modelSVG.replace(/<ellipse[\s\S]*?(?=<g id="vmc-L-bottom")/,'<ellipse cx="'+CV[0]/2+'" cy="'+(CV[1]-4)+'" rx="'+CV[0]*.36+'" ry="7" fill="rgba(60,30,15,.22)"/><image id="vmc-base" href="'+CFG.model+'" xlink:href="'+CFG.model+'" x="0" y="0" width="'+CV[0]+'" height="'+CV[1]+'"/>').replace(/<path d="M170 86[\s\S]*$/,'');
+    $('vmc-model').setAttribute('viewBox','0 0 '+CV[0]+' '+CV[1]);
+  }
+  $('vmc-model').innerHTML=modelSVG;
+  var stage=$('vmc-stage');
+  if(CFG.scene){stage.classList.add('vmc-hasscene');stage.style.setProperty('--scene','url("'+CFG.scene+'")');
+    if(CFG.sceneMobile)stage.style.setProperty('--scene-m','url("'+CFG.sceneMobile+'")');}
+
+  /* ---------- borboletas voando ---------- */
+  var BF='<svg viewBox="0 0 40 32" aria-hidden="true"><g class="wings" fill="#a8543d"><path d="M20 16C14 4 3 2 3 11c0 6 8 8 17 5z"/><path d="M20 16C26 4 37 2 37 11c0 6-8 8-17 5z"/><path d="M20 17c-8 1-12 6-9 11 3 3 8-1 9-11z" opacity=".8"/><path d="M20 17c8 1 12 6 9 11-3 3-8-1-9-11z" opacity=".8"/></g><rect x="19.2" y="10" width="1.6" height="16" rx=".8" fill="#6b2f20"/></svg>';
+  (function flies(){
+    var n=window.innerWidth<860?5:8;
+    for(var i=0;i<n;i++)(function(){
+      var el=document.createElement('div');el.className='vmc-fly';
+      var sz=22+Math.random()*20;el.style.width=sz+'px';
+      el.innerHTML=CFG.butterfly?'<img alt="" src="'+CFG.butterfly+'">':BF;
+      stage.appendChild(el);
+      var x=Math.random()*stage.clientWidth,y=Math.random()*stage.clientHeight*.7;
+      if(reduce){el.style.transform='translate('+x+'px,'+y+'px)';return}
+      (function go(){
+        var W=stage.clientWidth,Hh=stage.clientHeight;
+        var nx=Math.random()*(W-40),ny=Math.random()*(Hh*.75),dur=4500+Math.random()*5500;
+        var tilt=Math.max(-25,Math.min(25,(nx-x)*.08));
+        var a=el.animate([{transform:'translate('+x+'px,'+y+'px) rotate(0deg)'},
+          {transform:'translate('+((x+nx)/2+(Math.random()*80-40))+'px,'+((y+ny)/2-30-Math.random()*40)+'px) rotate('+tilt+'deg)',offset:.5},
+          {transform:'translate('+nx+'px,'+ny+'px) rotate(0deg)'}],{duration:dur,easing:'ease-in-out',fill:'forwards'});
+        x=nx;y=ny;a.onfinish=go;
+      })();
+    })();
+  })();
+
+  /* ---------- estado ---------- */
+  var sel={top:null,bottom:null,dress:null,shoes:null};
+  var activeCat=null;
+
+  var DEFVB={top:'90 130 220 250',bottom:'80 330 240 500',dress:'60 130 280 680',shoes:'130 790 140 62'};
+  function layerMarkup(p){if(!p.layer)return p.draw();var r=p.rect||[0,0,CV[0],CV[1]];return '<image href="'+p.layer+'" x="'+r[0]+'" y="'+r[1]+'" width="'+r[2]+'" height="'+r[3]+'"/>'}
+  function thumbMarkup(p){
+    var ts=p.thumb||((p.layer&&!p.draw)?p.layer:null);
+    if(ts) return '<img src="'+ts+'" alt="" loading="lazy" style="display:block;width:100%;aspect-ratio:3/4;object-fit:contain">';
+    return '<svg viewBox="'+(p.vb||DEFVB[p.cat]||'0 0 400 880')+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g class="vmc-garment" style="filter:drop-shadow(0 0 .6px rgba(50,25,15,.5))">'+layerMarkup(p)+'</g></svg>';
+  }
+  /* looks prontos: imagem inteira da modelo vestida (chave = top+bottom, ou id do vestido) */
+  var LOOKS={};(CFG.looks||[]).forEach(function(k){LOOKS[k]=1});
+  var LOOKDIR=CFG.looksDir||'looks/',lookTok=0;
+  function lookKey(){
+    if(sel.dress)return sel.dress.id;
+    return [sel.top&&sel.top.id,sel.bottom&&sel.bottom.id].filter(Boolean).join('+');
+  }
+  function applyLook(animate){
+    var key=lookKey(),L=$('vmc-L-look'),tok=++lookTok;
+    function setLayers(show){['top','bottom','dress'].forEach(function(c){$('vmc-L-'+c).style.display=show?'':'none'});var b=$('vmc-base');if(b)b.style.display=show?'':'none'}
+    if(!key||!LOOKS[key]){L.innerHTML='';L.classList.remove('in');setLayers(true);return}
+    var src=LOOKDIR+key+'.webp',im=new Image();
+    im.onload=function(){
+      if(tok!==lookTok)return;
+      L.innerHTML='<image href="'+src+'" xlink:href="'+src+'" x="0" y="0" width="'+CV[0]+'" height="'+CV[1]+'"/>';
+      setLayers(false);L.classList.remove('in');
+      if(animate&&!reduce){void L.getBoundingClientRect();L.classList.add('in')}
+    };
+    im.onerror=function(){if(tok===lookTok){L.innerHTML='';setLayers(true)}};
+    im.src=src;
+  }
+  function paint(cat,animate){
+    var g=$('vmc-L-'+cat),p=sel[cat];
+    g.innerHTML=p?layerMarkup(p):'';
+    g.classList.remove('in');
+    if(animate&&p&&!reduce){void g.getBoundingClientRect();g.classList.add('in')}
+    applyLook(animate);
+  }
+  function pick(p){
+    var was=sel[p.cat]===p, changed=[p.cat];
+    sel[p.cat]=was?null:p;
+    if(!was){
+      if(p.cat==='dress'){['top','bottom'].forEach(function(c){if(sel[c]){sel[c]=null;changed.push(c)}})}
+      if(p.cat==='top'||p.cat==='bottom'){if(sel.dress){sel.dress=null;changed.push('dress')}}
+    }
+    changed.forEach(function(c){paint(c,c===p.cat)});
+    refresh();
+  }
+  function chosen(){return CATS.map(function(c){return sel[c.id]}).filter(Boolean)}
+
+  /* ---------- UI: abas + grade ---------- */
+  var tabs=$('vmc-tabs');
+  CATS.forEach(function(c){
+    var b=document.createElement('button');b.className='vmc-tab';b.type='button';b.setAttribute('role','tab');b.dataset.cat=c.id;b.textContent=c.label;
+    b.addEventListener('click',function(){openCat(c.id)});tabs.appendChild(b);
+  });
+  function openCat(cat){
+    var first=!activeCat; activeCat=cat;
+    $('vmc-wardrobe').classList.add('open');
+    Array.prototype.forEach.call(tabs.children,function(b){b.setAttribute('aria-selected',String(b.dataset.cat===cat))});
+    var grid=$('vmc-grid');grid.innerHTML='';
+    PIECES.filter(function(p){return p.cat===cat}).forEach(function(p){
+      var it=document.createElement('button');it.type='button';it.className='vmc-item';it.dataset.id=p.id;
+      it.innerHTML=thumbMarkup(p)+'<span>'+p.name+'</span>';
+      it.addEventListener('click',function(){pick(p)});grid.appendChild(it);
+    });
+    grid.classList.remove('swap');void grid.offsetWidth;grid.classList.add('swap');
+    refresh();
+  }
+  function refresh(){
+    Array.prototype.forEach.call($('vmc-grid').children,function(it){
+      var p=PIECES.filter(function(x){return x.id===it.dataset.id})[0];
+      it.setAttribute('aria-pressed',String(sel[p.cat]===p));
+    });
+    var n=chosen().length;$('vmc-count').textContent=n;$('vmc-shop').disabled=!n;
+    if(!n)closeDrawer(); else if($('vmc-drawer').classList.contains('open'))fillDrawer();
+  }
+
+  /* ---------- ações ---------- */
+  $('vmc-clear').addEventListener('click',function(){
+    Object.keys(sel).forEach(function(c){sel[c]=null;paint(c)});refresh();
+  });
+  $('vmc-random').addEventListener('click',function(){
+    function rnd(c){var l=PIECES.filter(function(p){return p.cat===c});return l[Math.floor(Math.random()*l.length)]}
+    Object.keys(sel).forEach(function(c){sel[c]=null});
+    if(Math.random()<.4&&rnd('dress')){sel.dress=rnd('dress')}else{sel.top=rnd('top');sel.bottom=rnd('bottom')}
+    sel.shoes=rnd('shoes');
+    Object.keys(sel).forEach(function(c){paint(c,true)});refresh();
+  });
+  function fillDrawer(){
+    var items=chosen();
+    $('vmc-list').innerHTML=items.map(function(p){
+      return '<li><span>'+p.name+(p.price?' · '+p.price:'')+'</span><a href="'+(p.url||CFG.shopUrl)+'" target="_blank" rel="noopener">Ver peça</a></li>';
+    }).join('');
+    var txt='Montei este look no closet da VM: '+items.map(function(p){return p.name}).join(', ')+'. '+CFG.shopUrl;
+    var act='<a class="vmc-btn solid" href="'+CFG.shopUrl+'" target="_blank" rel="noopener" style="text-decoration:none">Ir para a loja</a>';
+    if(CFG.whatsapp)act+='<a class="vmc-btn" href="https://wa.me/'+CFG.whatsapp+'?text='+encodeURIComponent(txt)+'" target="_blank" rel="noopener" style="text-decoration:none">Enviar no WhatsApp</a>';
+    $('vmc-actions').innerHTML=act;
+  }
+  function openDrawer(){fillDrawer();$('vmc-drawer').classList.add('open');$('vmc-drawer').setAttribute('aria-hidden','false')}
+  function closeDrawer(){$('vmc-drawer').classList.remove('open');$('vmc-drawer').setAttribute('aria-hidden','true')}
+  $('vmc-shop').addEventListener('click',openDrawer);
+  $('vmc-close').addEventListener('click',closeDrawer);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrawer()});
+
+  /* ---------- abertura: "carregando" + portas ---------- */
+  function preload(){
+    var urls=[];PIECES.forEach(function(p){if(p.layer)urls.push(p.layer);if(p.thumb)urls.push(p.thumb)});
+    return Promise.all(urls.map(function(u){return new Promise(function(r){var i=new Image();i.onload=i.onerror=r;i.src=u;setTimeout(r,6000)})}));
+  }
+  var DUR=reduce?0:1700,t0=performance.now(),loaded=false;
+  preload().then(function(){loaded=true});
+  (function tick(now){
+    var k=DUR?Math.min(1,(now-t0)/DUR):1;
+    $('vmc-bar').style.width=(k*(loaded?100:90))+'%';
+    if(k<1||!loaded){requestAnimationFrame(tick);return}
+    setTimeout(function(){
+      $('vmc-intro').classList.add('done');
+      setTimeout(function(){openCat('top')},reduce?0:700);
+    },reduce?0:250);
+  })(t0);
+})();
+</script>
+</body>
+</html>

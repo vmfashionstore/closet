@@ -1,0 +1,242 @@
+{
+ "canvas": [
+  352,
+  1046
+ ],
+ "pieces": [
+  {
+   "id": "t2",
+   "cat": "top",
+   "name": "Body Havana Preto",
+   "layer": "assets/t2.webp",
+   "thumb": "assets/th_t2.webp",
+   "rect": [
+    98,
+    170,
+    163,
+    334
+   ]
+  },
+  {
+   "id": "t3",
+   "cat": "top",
+   "name": "Body Havana Branco",
+   "layer": "assets/t3.webp",
+   "thumb": "assets/th_t3.webp",
+   "rect": [
+    98,
+    174,
+    162,
+    324
+   ]
+  },
+  {
+   "id": "t4",
+   "cat": "top",
+   "name": "Casaqueto Positano",
+   "layer": "assets/t4.webp",
+   "thumb": "assets/th_t4.webp",
+   "rect": [
+    33,
+    157,
+    289,
+    343
+   ]
+  },
+  {
+   "id": "t5",
+   "cat": "top",
+   "name": "Corset Positano",
+   "layer": "assets/t5.webp",
+   "thumb": "assets/th_t5.webp",
+   "rect": [
+    104,
+    239,
+    153,
+    178
+   ]
+  },
+  {
+   "id": "t6",
+   "cat": "top",
+   "name": "Blazer Lis",
+   "layer": "assets/t6.webp",
+   "thumb": "assets/th_t6.webp",
+   "rect": [
+    38,
+    157,
+    277,
+    342
+   ]
+  },
+  {
+   "id": "t7",
+   "cat": "top",
+   "name": "Corset Lis",
+   "layer": "assets/t7.webp",
+   "thumb": "assets/th_t7.webp",
+   "rect": [
+    86,
+    194,
+    200,
+    318
+   ]
+  },
+  {
+   "id": "t8",
+   "cat": "top",
+   "name": "Blusa Brezza",
+   "layer": "assets/t8.webp",
+   "thumb": "assets/th_t8.webp",
+   "rect": [
+    76,
+    226,
+    199,
+    205
+   ]
+  },
+  {
+   "id": "t9",
+   "cat": "top",
+   "name": "Body Havana Marrom",
+   "layer": "assets/t9.webp",
+   "thumb": "assets/th_t9.webp",
+   "rect": [
+    94,
+    220,
+    168,
+    283
+   ]
+  },
+  {
+   "id": "b1",
+   "cat": "bottom",
+   "name": "Calça Brezza",
+   "layer": "assets/b1.webp",
+   "thumb": "assets/th_b1.webp",
+   "rect": [
+    38,
+    375,
+    280,
+    650
+   ]
+  },
+  {
+   "id": "b3",
+   "cat": "bottom",
+   "name": "Shorts Saia Positano",
+   "layer": "assets/b3.webp",
+   "thumb": "assets/th_b3.webp",
+   "rect": [
+    57,
+    389,
+    246,
+    164
+   ]
+  },
+  {
+   "id": "b4",
+   "cat": "bottom",
+   "name": "Shorts Lis",
+   "layer": "assets/b4.webp",
+   "thumb": "assets/th_b4.webp",
+   "rect": [
+    79,
+    368,
+    207,
+    177
+   ]
+  },
+  {
+   "id": "d1",
+   "cat": "dress",
+   "name": "Conjunto Perla Marinho",
+   "layer": "assets/d1.webp",
+   "thumb": "assets/th_d1.webp",
+   "rect": [
+    14,
+    157,
+    329,
+    882
+   ]
+  },
+  {
+   "id": "d2",
+   "cat": "dress",
+   "name": "Vestido Positano",
+   "layer": "assets/d2.webp",
+   "thumb": "assets/th_d2.webp",
+   "rect": [
+    6,
+    157,
+    339,
+    499
+   ]
+  },
+  {
+   "id": "d3",
+   "cat": "dress",
+   "name": "Vestido Bellarosa Preto",
+   "layer": "assets/d3.webp",
+   "thumb": "assets/th_d3.webp",
+   "rect": [
+    32,
+    157,
+    292,
+    882
+   ]
+  },
+  {
+   "id": "d4",
+   "cat": "dress",
+   "name": "Vestido Bellarosa Marfim",
+   "layer": "assets/d4.webp",
+   "thumb": "assets/th_d4.webp",
+   "rect": [
+    19,
+    157,
+    317,
+    882
+   ]
+  },
+  {
+   "id": "d5",
+   "cat": "dress",
+   "name": "Conjunto Perla Verde",
+   "layer": "assets/d5.webp",
+   "thumb": "assets/th_d5.webp",
+   "rect": [
+    27,
+    157,
+    298,
+    882
+   ]
+  },
+  {
+   "id": "d6",
+   "cat": "dress",
+   "name": "Macaquinho Sapphir Marfim",
+   "layer": "assets/d6.webp",
+   "thumb": "assets/th_d6.webp",
+   "rect": [
+    76,
+    175,
+    207,
+    375
+   ]
+  },
+  {
+   "id": "d7",
+   "cat": "dress",
+   "name": "Macaquinho Sapphir Cereja",
+   "layer": "assets/d7.webp",
+   "thumb": "assets/th_d7.webp",
+   "rect": [
+    75,
+    170,
+    214,
+    369
+   ]
+  }
+ ]
+}
